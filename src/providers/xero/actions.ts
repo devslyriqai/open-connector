@@ -4,9 +4,9 @@ import { s } from "../../core/json-schema.ts";
 import { defineProviderAction } from "../../core/provider-definition.ts";
 import {
   xeroContactsReadScope,
-  xeroReportsReadScope,
+  xeroInvoicesReadScope,
+  xeroReportsProfitAndLossReadScope,
   xeroSettingsReadScope,
-  xeroTransactionsReadScope,
 } from "./scopes.ts";
 
 const service = "xero";
@@ -29,7 +29,7 @@ export const xeroActions: ActionDefinition[] = [
   defineProviderAction(service, {
     name: "list_invoices",
     description: "List invoices, optionally filtered by status.",
-    requiredScopes: [xeroTransactionsReadScope],
+    requiredScopes: [xeroInvoicesReadScope],
     inputSchema: s.object(
       {
         statuses: s.array(s.string({ description: "Invoice status, e.g. AUTHORISED, PAID, DRAFT." }), {
@@ -59,7 +59,7 @@ export const xeroActions: ActionDefinition[] = [
   defineProviderAction(service, {
     name: "get_profit_and_loss",
     description: "Profit & Loss report for a date range (input to the BAS reconciliation dashboard).",
-    requiredScopes: [xeroReportsReadScope],
+    requiredScopes: [xeroReportsProfitAndLossReadScope],
     inputSchema: s.object(
       {
         fromDate: s.string({ minLength: 1, description: "Report start date, YYYY-MM-DD." }),
